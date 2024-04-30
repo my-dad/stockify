@@ -56,6 +56,8 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(platform(libs.firebase))
     implementation(libs.lottie)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
