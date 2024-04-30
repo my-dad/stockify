@@ -27,7 +27,7 @@ fun String.isValidPassword(): Boolean {
 
 fun Calendar.previousDate(): String {
     val calendar = this.clone() as Calendar
-    calendar.add(Calendar.DAY_OF_MONTH, -1)
+    calendar.add(Calendar.DAY_OF_MONTH, -2)
     val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return sdf.format(calendar.time)
 }
