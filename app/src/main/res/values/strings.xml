@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">stockify</string>
+    <string name="register_here">Don\'t have an account? Register here</string>
 </resources>

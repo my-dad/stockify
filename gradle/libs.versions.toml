@@ -18,6 +18,7 @@ room-ktx = "2.6.1"
 room-compiler = "2.6.1"
 firebase-bom = "32.8.1"
 ksp = "1.9.0-1.0.13"
+lottie = "3.4.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,7 +40,7 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room-ktx
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room-compiler" }
 
 firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
-
+lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
