@@ -1,12 +1,13 @@
 package com.example.stockify
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockify.databinding.ItemStockBinding
 import com.example.stockify.model.StockDetails
 
-class StockListAdapter(private val dataList: List<StockDetails>, private val onItemClick: (StockDetails) -> Unit) :
+class StockListAdapter(private var dataList: List<StockDetails>, private val onItemClick: (StockDetails) -> Unit) :
     RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
 
     // ViewHolder class to hold the views
@@ -37,11 +38,16 @@ class StockListAdapter(private val dataList: List<StockDetails>, private val onI
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("StockListAdapter", "onBindViewHolder: $itemCount")
         holder.bind(dataList[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun submitList(list: List<StockDetails>) {
+        this.dataList = list
     }
 }

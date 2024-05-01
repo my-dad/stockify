@@ -1,7 +1,9 @@
 package com.example.stockify.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.stockify.BaseActivity
@@ -23,20 +25,32 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
 
     private var stockList : List<StockDetails> = listOf()
 
+    private lateinit var adapter: StockListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         preferenceManager = PreferenceManager(this)
         preferenceManager.setUserLoggedIn(true)
+        binding.recyclerView.visibility= View.GONE
+        binding.progressCircular.visibility = View.VISIBLE
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = StockListAdapter(stockList) { clickedItem ->
+
+        }
+        binding.recyclerView.adapter = adapter
 
         val call = RetrofitClient.instance.getStockData("Bearer $API_KEY", Calendar.getInstance().previousDate().toString())
         call.enqueue(object : Callback<StockPayload> {
             override fun onResponse(call: Call<StockPayload>, response: Response<StockPayload>) {
                 if (response.isSuccessful) {
+                    binding.recyclerView.visibility= View.VISIBLE
+                    binding.progressCircular.visibility = View.GONE
                     val data = response.body()
                     // Process the data
                     stockList = data?.results ?: listOf()
+                    adapter.submitList(stockList)
+                    Log.d("StockHome", "onResponse: ${stockList.size}")
                 } else {
                     // Handle error
                     Toast.makeText(this@StockHomeActivity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
@@ -48,15 +62,6 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
                 Toast.makeText(this@StockHomeActivity, "Failed to fetch data: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-
-
-        val adapter = StockListAdapter(stockList) { clickedItem ->
-            // Handle item click, e.g., navigate to another activity
-//            val intent = Intent(this, AnotherActivity::class.java)
-//            intent.putExtra("clickedItem", clickedItem)
-//            context.startActivity(intent)
-        }
-        binding.recyclerView.adapter = adapter
     }
 
     override fun createBinding(): ActivityStockHomeBinding {
