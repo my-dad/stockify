@@ -21,6 +21,6 @@ data class StockDetails(
     @SerializedName("n") val numberOfTransactions: Long,
     @SerializedName("o") val openPrice: Double,
     @SerializedName("t") val timestamp: Long,
-    @SerializedName("v") val volumeOfSymbol: Long,
-    @SerializedName("vw") val weightedAveragePrice: Double,
+    @SerializedName("v") val volumeOfSymbol: Double,
+    @SerializedName("vw") val weightedAveragePrice: Double
 )

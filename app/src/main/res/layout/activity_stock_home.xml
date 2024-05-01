@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="#6E6B6B"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.StockHomeActivity">
@@ -30,5 +31,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extendedFloatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:text="Extended FAB"
+        app:backgroundTint="@color/material_dynamic_primary40"
+        app:iconTint="@color/white"
+        app:icon="@drawable/baseline_adb"
+        android:tooltipText="Click to see bought stocks"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

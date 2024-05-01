@@ -20,6 +20,7 @@ firebase-bom = "32.8.1"
 ksp = "1.9.0-1.0.13"
 coroutines = "1.7.3"
 lottie = "3.4.0"
+expandable-fab = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,6 +46,8 @@ lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie"
 
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+expandable-fab = { group = "com.nambimobile.widgets", name = "expandable-fab", version.ref = "expandable-fab" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

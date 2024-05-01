@@ -7,7 +7,7 @@ import com.example.stockify.database.dao.UserDao
 import com.example.stockify.model.StockDetails
 import com.example.stockify.model.User
 
-@Database(entities = [User::class, StockDetails::class], version = 1)
+@Database(entities = [User::class, StockDetails::class], version = 2)
 abstract class StockDatabase : RoomDatabase(){
     abstract fun UserDao() : UserDao
     abstract fun StockDetailsDao() : StockDetailsDao

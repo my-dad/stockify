@@ -22,11 +22,11 @@ class StockListAdapter(private var dataList: List<StockDetails>, private val onI
         }
 
         fun bind(item: StockDetails) {
-            binding.highPrice.text = item.highestPrice.toString()
-            binding.symbol.text = item.symbol.toString()
-            binding.lowPrice.text = item.lowestPrice.toString()
-            binding.volume.text = item.volumeOfSymbol.toString()
-            binding.noOfTrans.text = item.numberOfTransactions.toString()
+            binding.highPrice.text = "High Price: "+item.highestPrice.toString()
+            binding.symbol.text = "Symbol: "+ item.symbol
+            binding.lowPrice.text = "Lowest Price: "+item.lowestPrice.toString()
+            binding.volume.text = "Stock Volume: "+item.volumeOfSymbol.toString()
+            binding.noOfTrans.text = "No of Transaction: "+item.numberOfTransactions.toString()
         }
     }
 

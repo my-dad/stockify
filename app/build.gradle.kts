@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.lottie)
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
+    implementation(libs.expandable.fab)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
