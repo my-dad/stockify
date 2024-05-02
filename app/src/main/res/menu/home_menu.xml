@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/detailsPage"
-        android:icon="@drawable/ic_app_logo"
+        android:icon="@drawable/baseline_add_home"
         android:tooltipText="Tap to go to Details Page"
         app:showAsAction="always"
         android:title="Stock Details" />
