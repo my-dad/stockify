@@ -34,7 +34,6 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
     private lateinit var preferenceManager: PreferenceManager
     private lateinit var stockDao: StockDetailsDao
     private var stockList : List<StockDetails> = listOf()
-
     private lateinit var adapter: StockListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,19 +41,24 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
         stockDao = (application as Application).database.StockDetailsDao()
         preferenceManager = PreferenceManager(this)
         preferenceManager.setUserLoggedIn(true)
-        binding.recyclerView.visibility= View.GONE
-        binding.progressCircular.visibility = View.VISIBLE
-
         initUI()
+        getTodaysStockDataApiCall()
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        adapter = StockListAdapter(listOf()) {
+            saveStockToDb(it)
+        }
+        binding.recyclerView.adapter = adapter
+    }
 
-
-        val call = RetrofitClient.instance.getStockData("Bearer $API_KEY", Calendar.getInstance().previousDate().toString())
+    private fun getTodaysStockDataApiCall() {
+        val call = RetrofitClient.instance.getStockData(
+            "Bearer $API_KEY",
+            Calendar.getInstance().previousDate().toString()
+        )
         call.enqueue(object : Callback<StockPayload> {
             override fun onResponse(call: Call<StockPayload>, response: Response<StockPayload>) {
                 if (response.isSuccessful) {
-                    binding.recyclerView.visibility= View.VISIBLE
+                    binding.recyclerView.visibility = View.VISIBLE
                     binding.progressCircular.visibility = View.GONE
                     val data = response.body()
                     // Process the data
@@ -63,7 +67,11 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
                     Log.d("StockHome", "onResponse: ${stockList.size}")
                 } else {
                     // Handle error
-                    Toast.makeText(this@StockHomeActivity, "Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@StockHomeActivity,
+                        "Error: ${response.code()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -72,13 +80,13 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
                 Log.d("StockHome", "onFailure: ${t.message}")
                 Log.d("StockHome", "onFailure: ${t.cause}")
                 // Handle failure
-                Toast.makeText(this@StockHomeActivity, "Failed to fetch data: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@StockHomeActivity,
+                    "Failed to fetch data: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
-        adapter = StockListAdapter(listOf()) {
-            saveStokeToDb(it)
-        }
-        binding.recyclerView.adapter = adapter
     }
 
     override fun createBinding(): ActivityStockHomeBinding {
@@ -87,6 +95,9 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
 
 
     fun initUI(){
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.visibility= View.GONE
+        binding.progressCircular.visibility = View.VISIBLE
         binding.extendedFloatingActionButton.setOnClickListener {
             val intent = Intent(this@StockHomeActivity, BoughtStockListActivity::class.java)
             startActivity(intent)
@@ -95,7 +106,7 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
 
     }
 
-    fun saveStokeToDb(stockDetails: StockDetails) {
+    fun saveStockToDb(stockDetails: StockDetails) {
         CoroutineScope(Dispatchers.IO).launch {
             stockDao.buyStock(stockDetails)
         }

@@ -13,7 +13,16 @@
         android:layout_height="match_parent"
         android:alpha=".3"
         android:scaleType="fitEnd"
-        android:src="@drawable/ic_vr_grid_background" />
+        android:src="@drawable/ic_vr_grid_background"/>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewBackground"
+        app:srcCompat="@drawable/ic_app_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutName"

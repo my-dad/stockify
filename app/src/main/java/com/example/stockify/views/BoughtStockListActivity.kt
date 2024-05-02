@@ -25,6 +25,11 @@ class BoughtStockListActivity : BaseActivity<ActivityBoughtStockListBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         stockDao = (application as Application).database.StockDetailsDao()
+        initUI()
+        getAllStocks()
+    }
+
+    private fun initUI() {
 
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -32,9 +37,6 @@ class BoughtStockListActivity : BaseActivity<ActivityBoughtStockListBinding>() {
 
         }
         binding.recyclerView.adapter = adapter
-        getAllStocks()
-
-        adapter.submitList(list)
     }
 
     override fun createBinding(): ActivityBoughtStockListBinding {

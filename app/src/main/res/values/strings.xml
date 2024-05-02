@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">stockify</string>
-    <string name="register_here">Don\'t have an account? Register here</string>
+    <string name="register_here">Don\'t have an account? <u><font color="#0000FF">Register here</font></u></string>
+    <string name="no_bought_stocks">Please go back to the main page and click on &quot;Buy Now&quot;\nto see your bought stocks here.</string>
 </resources>
