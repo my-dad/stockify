@@ -1,11 +1,13 @@
 package com.example.stockify.views
 
+import kotlinx.coroutines.withContext
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import com.example.stockify.BaseActivity
 import com.example.stockify.Constants.API_KEY
 import com.example.stockify.Constants.SHARED_PREF_NAME
 import com.example.stockify.PreferenceManager
+import com.example.stockify.R
 import com.example.stockify.StockListAdapter
 import com.example.stockify.database.dao.StockDetailsDao
 import com.example.stockify.databinding.ActivityStockHomeBinding
@@ -21,6 +24,7 @@ import com.example.stockify.model.StockDetails
 import com.example.stockify.model.StockPayload
 import com.example.stockify.previousDate
 import com.example.stockify.service.RetrofitClient
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,11 +32,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.Calendar
-import android.R.id
-import android.content.Intent
-import android.text.Editable
-import android.text.TextWatcher
-import com.example.stockify.R
 
 
 class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
@@ -40,7 +39,6 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
     private lateinit var stockDao: StockDetailsDao
     private var stockList : List<StockDetails> = listOf()
     private lateinit var adapter: StockListAdapter
-    var mMenu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +48,7 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
         initUI()
         getTodaysStockDataApiCall()
 
-        adapter = StockListAdapter(listOf()) {
+        adapter = StockListAdapter(listOf(), "home") {
             saveStockToDb(it)
         }
         binding.recyclerView.adapter = adapter
@@ -59,7 +57,7 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
     private fun getTodaysStockDataApiCall() {
         val call = RetrofitClient.instance.getStockData(
             "Bearer $API_KEY",
-            Calendar.getInstance().previousDate().toString()
+            Calendar.getInstance().previousDate()
         )
         call.enqueue(object : Callback<StockPayload> {
             override fun onResponse(call: Call<StockPayload>, response: Response<StockPayload>) {
@@ -139,7 +137,10 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
 
     fun saveStockToDb(stockDetails: StockDetails) {
         CoroutineScope(Dispatchers.IO).launch {
-            stockDao.buyStock(stockDetails)
+            val result = stockDao.buyStock(stockDetails)
+            withContext(Dispatchers.Main) {
+                showSnackBar("Congratulation! on buying this stocks.")
+            }
         }
     }
 
@@ -163,6 +164,10 @@ class StockHomeActivity : BaseActivity<ActivityStockHomeBinding>() {
     private fun updateRecyclerView(newList: List<StockDetails>) {
         adapter.submitList(newList)
         adapter.notifyDataSetChanged()
+    }
+
+    fun showSnackBar(string: String){
+        Snackbar.make(binding.root, string, Snackbar.LENGTH_SHORT).show()
     }
 
 }

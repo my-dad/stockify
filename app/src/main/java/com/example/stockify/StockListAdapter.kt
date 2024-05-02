@@ -2,13 +2,15 @@ package com.example.stockify
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stockify.databinding.ItemStockBinding
 import com.example.stockify.model.StockDetails
 
-class StockListAdapter(private var dataList: List<StockDetails>, private val onItemClick: (StockDetails) -> Unit) :
+class StockListAdapter(private var dataList: List<StockDetails>, private val identifier:String ,private val onItemClick: (StockDetails) -> Unit) :
     RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
+
 
     // ViewHolder class to hold the views
     inner class ViewHolder(private val binding: ItemStockBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -27,6 +29,14 @@ class StockListAdapter(private var dataList: List<StockDetails>, private val onI
             binding.lowPrice.text = "Lowest Price: "+item.lowestPrice.toString()
             binding.volume.text = "Stock Volume: "+item.volumeOfSymbol.toString()
             binding.noOfTrans.text = "No of Transaction: "+item.numberOfTransactions.toString()
+
+            if (identifier == "home"){
+                binding.textViewBuyNow.visibility = View.VISIBLE
+                binding.textViewSell.visibility = View.GONE
+            }else{
+                binding.textViewBuyNow.visibility = View.GONE
+                binding.textViewSell.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -35,6 +45,7 @@ class StockListAdapter(private var dataList: List<StockDetails>, private val onI
         val binding = ItemStockBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
+
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -63,19 +63,31 @@
 
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
+            android:id="@+id/textViewBuyNow"
+            android:layout_width="0dp"
             android:layout_height="27dp"
             android:background="#55BD6B"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="Buy Stock"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-condensed"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayoutStockDetails" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textViewSell"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:background="#A13737"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="Sell Stock"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBuyNow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
